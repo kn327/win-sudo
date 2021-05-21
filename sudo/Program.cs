@@ -61,11 +61,14 @@ namespace sudo
                 }
             }
 
-            string stdOut = Properties.Get(Properties.STDOUT, Path.GetTempFileName);
-            string stdErr = Properties.Get(Properties.STDERR, Path.GetTempFileName);
+            string stdOut = Flags.Contains(Flags.SHOW_WINDOW) ? string.Empty : Properties.Get(Properties.STDOUT, Path.GetTempFileName);
+            string stdErr = Flags.Contains(Flags.SHOW_WINDOW) ? string.Empty : Properties.Get(Properties.STDERR, Path.GetTempFileName);
 
             string command = "cmd";
-            string arguments = $"/c \"{string.Join(" ", args)}\" > {stdOut} 2> {stdErr}";
+            string arguments = $"/c \"{string.Join(" ", args)}\"";
+            
+            if (!Flags.Contains(Flags.SHOW_WINDOW))
+                arguments += $" > {stdOut} 2> {stdErr}";
 
             if (Flags.Contains(Flags.DEBUG))
             {
@@ -104,8 +107,11 @@ namespace sudo
                 processException = ex;
             }
 
-            StdOutErrUtil.WriteAndDelete(stdOut, Properties.STDOUT, Console.Out);
-            StdOutErrUtil.WriteAndDelete(stdErr, Properties.STDERR, Console.Error);
+            if (!Flags.Contains(Flags.SHOW_WINDOW))
+            {
+                StdOutErrUtil.WriteAndDelete(stdOut, Properties.STDOUT, Console.Out);
+                StdOutErrUtil.WriteAndDelete(stdErr, Properties.STDERR, Console.Error);
+            }
 
             if (processException != null) {
                 Console.Error.WriteLine(processException);
