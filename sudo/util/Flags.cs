@@ -9,7 +9,6 @@ namespace sudo.util
         public const string DEBUG = "--debug";
         public const string SAVE_TEMP = "--save-temp";
         public const string SHOW_WINDOW = "--show-window";
-        public const string UNESCAPE_CHARS = "--unescape-chars";
 
         public static int Count => _flags.Count;
         public static IEnumerable<string> Values => _flags;

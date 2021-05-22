@@ -24,7 +24,6 @@ Properties appear in key value pair syntax `{property} {value}`
 # flags #
 * `--save-temp` will prevent the application from deleting the temp files after the process completed
 * `--show-window` will display a new window for the elevated command prompt to allow you to write your own code manually, when this flag is enabled the output is not redirected anywhere.
-* `--unescape-chars` will attempt to replace escaped characters with their unescaped counterparts so that the argument list is properly transcoded into cmd
 * `--debug` will output debug lines detailing the commands being passed to the sub-process
 
 ### Examples ###

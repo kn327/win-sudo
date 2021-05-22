@@ -41,26 +41,6 @@ namespace sudo
             if (args.Length == 0)
                 throw new ArgumentException($"No command specified.");
 
-            if (Flags.Contains(Flags.UNESCAPE_CHARS))
-            {
-                Dictionary<string, string> escapes = new Dictionary<string, string> {
-                    { "\\^\\&", "&" },
-                    { "\\^\\<", "<" },
-                    { "\\^\\>", ">" },
-                    { "\\^\\|", "|" },
-                    { "\\^\\\\", "\\" },
-                    { "\\^\\^", "^" },
-                    { "\\^\\^\\!", "!" },
-                };
-                for (int i = 0; i < args.Length; i++)
-                {
-                    foreach (KeyValuePair<string, string> escapedChar in escapes)
-                    {
-                        args[i] = Regex.Replace(args[i], escapedChar.Key, escapedChar.Value);
-                    }
-                }
-            }
-
             string stdOut = Flags.Contains(Flags.SHOW_WINDOW) ? string.Empty : Properties.Get(Properties.STDOUT, Path.GetTempFileName);
             string stdErr = Flags.Contains(Flags.SHOW_WINDOW) ? string.Empty : Properties.Get(Properties.STDERR, Path.GetTempFileName);
 
